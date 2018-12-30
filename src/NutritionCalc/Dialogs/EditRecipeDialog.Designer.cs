@@ -180,6 +180,7 @@
       this.gridViewItems.OptionsView.ShowIndicator = false;
       this.gridViewItems.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.False;
       this.gridViewItems.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridViewItems_CustomUnboundColumnData);
+      this.gridViewItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridViewItems_KeyDown);
       // 
       // colBullet
       // 

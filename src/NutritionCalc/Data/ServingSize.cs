@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace NutritionCalc
 {
-  public struct ServingSize<T> where T : Unit
+  public struct ServingSize<T> : IServingSize
+    where T : Unit
   {
     public decimal Amount { get; set; }
     public T Unit { get; set; }
+    
+    Unit IServingSize.Unit => Unit;
   }
 }

@@ -12,5 +12,15 @@ namespace NutritionCalc
     public ServingSize<VolumeUnit> ServingSizeVolume { get; set; }
     public ServingSize<CustomUnit> ServingSizeCustom { get; set; }
     public NutritionInfo Nutrition { get; set; }
+
+    public IEnumerable<IServingSize> Servings
+    {
+      get
+      {
+        yield return ServingSizeWeight;
+        yield return ServingSizeVolume;
+        yield return ServingSizeCustom;
+      }
+    }
   }
 }

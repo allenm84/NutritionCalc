@@ -104,6 +104,43 @@ namespace NutritionCalc
       nutritionInfoEdit.WriteTo(recipe);
     }
 
+    private static bool TryGetServingSize(BaseIngredient ingredient, Unit unit, out IServingSize size)
+    {
+      size = ingredient.Servings.SingleOrDefault(s => s.Unit?.Equals(unit) ?? false);
+      return (size != null);
+    }
+
+    private void MoveNextRow()
+    {
+      int rowHandle = gridViewItems.FocusedRowHandle;
+      if (gridViewItems.IsNewItemRow(rowHandle) && gridViewItems.ActiveEditor == null)
+      {
+        return;
+      }
+
+      gridViewItems.CloseEditor();
+      gridViewItems.MoveNext();
+
+      if (rowHandle == gridViewItems.FocusedRowHandle)
+      {
+        // the row did not change
+        gridViewItems.AddNewRow();
+      }
+    }
+
+    protected override bool ProcessDialogKey(Keys keyData)
+    {
+      if (keyData == Keys.Enter && gridItems.IsFocused)
+      {
+        MoveNextRow();
+        return true;
+      }
+      else
+      {
+        return base.ProcessDialogKey(keyData);
+      }
+    }
+
     private void gridViewItems_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
     {
       if (e.Column == colBullet)
@@ -116,6 +153,20 @@ namespace NutritionCalc
         e.Value = ingredientTable.ContainsKey(item.ItemId ?? string.Empty)
           ? Resources.tick_small 
           : null;
+      }
+    }
+
+    private void gridViewItems_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyCode == Keys.Delete &&
+        gridViewItems.GetFocusedRow() is RecipeItem item &&
+        Confirm($"Are you sure you want to delete {item.Text}?"))
+      {
+        recipeItemBindingSource.Remove(item);
+      }
+      else if (e.KeyCode == Keys.Enter)
+      {
+        MoveNextRow();
       }
     }
 
@@ -149,36 +200,32 @@ namespace NutritionCalc
         {
           // get the unit that the user entered into the recipe
           var unit = Units.FromSelection((item.UnitId, item.UnitTypeName));
-
-          // go through the supported unit types and get the nutrition information
-          if (unit is WeightUnit weight)
+          if (TryGetServingSize(ingredient, unit, out IServingSize servingSize))
           {
-            var servingSize = ingredient.ServingSizeWeight;
-            if (servingSize.Unit != null)
-            {
-              // take the desired amount and convert to grams
-              var totalGrams = weight.AsGrams * item.Quantity;
+            // take the desired amount and convert 
+            var totalUnit = unit.Factor * item.Quantity;
 
-              // lets say the serving size is 5 grams, and we have a total of 10 grams.
-              // To get the factor, we take the total grams and divide by the serving size
-              var servingSizeGrams = servingSize.Unit.AsGrams * servingSize.Amount;
-              var factor = totalGrams / servingSizeGrams;
+            // lets say the serving size is 5 grams, and we have a total of 10 grams.
+            // To get the factor, we take the total grams and divide by the serving size
+            var servingSizeUnit = servingSize.Unit.Factor * servingSize.Amount;
+            var factor = totalUnit / servingSizeUnit;
 
-              // with this factor, we need to scale the nutrition info
-              nutrition += (ingredient.Nutrition * factor);
-            }
-            else
-            {
-              errorMessage = $"You entered in a Weight, but {ingredient.Name} does not have a Weight unit defined";
-              succeeded = false;
-              break;
-            }
+            // with this factor, we need to scale the nutrition info
+            nutrition += (ingredient.Nutrition * factor);
+          }
+          else
+          {
+            var unitType = item.UnitTypeName;
+            errorMessage = $"You entered in a {unitType}, but {ingredient.Name} does not have a {unitType} defined";
+            succeeded = false;
+            break;
           }
         }
         else
         {
-          errorMessage = $"{item.Text} could not be found, so nutrition info cannot be calculated.";
+          errorMessage = $"{item.Text} could not be found; nutrition info cannot be calculated.";
           succeeded = false;
+          break;
         }
       }
 
@@ -186,12 +233,16 @@ namespace NutritionCalc
       {
         ShowError(errorMessage);
       }
+      else
+      {
+        nutritionInfoEdit.ReadNutrition(nutrition);
+      }
     }
 
     private void btnDeleteRecipe_Click(object sender, EventArgs e)
     {
       var type = IsRecipe ? "recipe" : "base recipe";
-      if (Confirm($"Are you sure you want to delete this {type}? "))
+      if (Confirm($"Are you sure you want to delete this {type}?"))
       {
         InternalCustomDialogResult = CustomDialogResult.Delete;
         Close();

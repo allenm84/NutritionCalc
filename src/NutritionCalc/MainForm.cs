@@ -45,6 +45,12 @@ namespace NutritionCalc
       {
         templateRecipeBindingSource.Add(r);
       }
+
+      // populate the recipes
+      foreach (var r in data.Recipes)
+      {
+        recipeBindingSource.Add(r);
+      }
     }
 
     private bool DoEditIngredient(Ingredient ingredient, bool isAdding)
@@ -140,7 +146,7 @@ namespace NutritionCalc
     {
       var data = new NutritionCalcData();
       data.Ingredients = grpIngredients.OfType<Ingredient>().ToList();
-      data.Recipes = new List<Recipe>();
+      data.Recipes = recipeBindingSource.OfType<Recipe>().ToList();
       data.TemplateRecipes = templateRecipeBindingSource.OfType<TemplateRecipe>().ToList();
       var json = JsonConvert.SerializeObject(data);
       File.WriteAllText(mFilepath, json);

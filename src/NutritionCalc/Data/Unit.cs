@@ -11,6 +11,8 @@ namespace NutritionCalc
     public string Name { get; set; }
     public string Display { get; set; }
 
+    public abstract decimal Factor { get; }
+
     private bool IsEqual(Unit other)
     {
       return 

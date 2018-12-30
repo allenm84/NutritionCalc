@@ -8,5 +8,6 @@ namespace NutritionCalc
 {
   public class CustomUnit : Unit
   {
+    public override decimal Factor => 1;
   }
 }

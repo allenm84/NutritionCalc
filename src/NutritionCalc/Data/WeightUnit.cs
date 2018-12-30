@@ -9,5 +9,7 @@ namespace NutritionCalc
   public class WeightUnit : Unit
   {
     public decimal AsGrams { get; set; }
+
+    public override decimal Factor => AsGrams;
   }
 }

@@ -60,6 +60,7 @@
       this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
       this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
       this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+      this.skinBarSubItem1 = new DevExpress.XtraBars.SkinBarSubItem();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.lstRecipes)).BeginInit();
@@ -318,8 +319,9 @@
       this.barManager1.DockControls.Add(this.barDockControlRight);
       this.barManager1.Form = this;
       this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.tbbSave});
-      this.barManager1.MaxItemId = 1;
+            this.tbbSave,
+            this.skinBarSubItem1});
+      this.barManager1.MaxItemId = 2;
       // 
       // bar1
       // 
@@ -328,7 +330,8 @@
       this.bar1.DockRow = 0;
       this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
       this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.tbbSave, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.tbbSave, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.skinBarSubItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
       this.bar1.OptionsBar.AllowQuickCustomization = false;
       this.bar1.OptionsBar.DrawDragBorder = false;
       this.bar1.OptionsBar.UseWholeRow = true;
@@ -374,6 +377,14 @@
       this.barDockControlRight.Location = new System.Drawing.Point(574, 31);
       this.barDockControlRight.Manager = this.barManager1;
       this.barDockControlRight.Size = new System.Drawing.Size(0, 411);
+      // 
+      // skinBarSubItem1
+      // 
+      this.skinBarSubItem1.Caption = "Skins";
+      this.skinBarSubItem1.Id = 1;
+      this.skinBarSubItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("skinBarSubItem1.ImageOptions.Image")));
+      this.skinBarSubItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("skinBarSubItem1.ImageOptions.LargeImage")));
+      this.skinBarSubItem1.Name = "skinBarSubItem1";
       // 
       // MainForm
       // 
@@ -446,6 +457,7 @@
     private System.Windows.Forms.BindingSource templateRecipeBindingSource;
     private DevExpress.XtraBars.BarButtonItem tbbSave;
     private System.Windows.Forms.BindingSource recipeBindingSource;
+    private DevExpress.XtraBars.SkinBarSubItem skinBarSubItem1;
   }
 }
 

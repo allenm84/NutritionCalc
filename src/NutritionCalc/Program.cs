@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using DevExpress.UserSkins;
 using DevExpress.Skins;
 using DevExpress.LookAndFeel;
+using System.IO;
 
 namespace NutritionCalc
 {
@@ -21,8 +22,12 @@ namespace NutritionCalc
 
       BonusSkins.Register();
       SkinManager.EnableFormSkins();
-      UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
-      Application.Run(new MainForm());
+
+      using (new DevExpressSkin())
+      using (var form = new MainForm())
+      {
+        Application.Run(form);
+      }
     }
   }
 }

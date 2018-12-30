@@ -13,6 +13,8 @@ namespace NutritionCalc
 {
   public partial class BaseForm : DevExpress.XtraEditors.XtraForm
   {
+    protected bool mCancelClose = false;
+
     public BaseForm()
     {
       InitializeComponent();
@@ -40,6 +42,16 @@ namespace NutritionCalc
     {
       var result = ShowDialog(owner);
       return InternalCustomDialogResult ?? result.ToCustomDialogResult();
+    }
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+      if (mCancelClose)
+      {
+        e.Cancel = true;
+        mCancelClose = false;
+      }
+      base.OnFormClosing(e);
     }
   }
 }

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace NutritionCalc
 {
-  public class VolumeUnit : Unit
+  public interface IServingSize
   {
-    public decimal AsTeaspoons { get; set; }
-
-    public override decimal Factor => AsTeaspoons;
+    decimal Amount { get; }
+    Unit Unit { get; }
   }
 }
