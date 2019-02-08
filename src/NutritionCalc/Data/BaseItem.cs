@@ -12,7 +12,19 @@ namespace NutritionCalc
   {
     public event PropertyChangedEventHandler PropertyChanged;
 
-    public string Id { get; } = $"{Guid.NewGuid()}";
+    private string mId = null;
+    public string Id
+    {
+      get
+      {
+        if (string.IsNullOrWhiteSpace(mId))
+        {
+          mId = $"{Guid.NewGuid()}";
+        }
+        return mId;
+      }
+      set { mId = value; }
+    }
 
     private string mName;
     public string Name

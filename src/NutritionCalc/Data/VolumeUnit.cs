@@ -11,5 +11,10 @@ namespace NutritionCalc
     public decimal AsTeaspoons { get; set; }
 
     public override decimal Factor => AsTeaspoons;
+
+    public override bool CanConvertTo(Unit other)
+    {
+      return other is VolumeUnit;
+    }
   }
 }

@@ -13,11 +13,12 @@ namespace NutritionCalc
     Juices,
     Meat,
     Sauces,
-    Seasonings,
+    Condiments,
     Sweets,
     Vegetables,
     Bread,
     Snack,
     Baking,
+    Grains,
   }
 }

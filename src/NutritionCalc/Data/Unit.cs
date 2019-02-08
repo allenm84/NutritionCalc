@@ -13,12 +13,14 @@ namespace NutritionCalc
 
     public abstract decimal Factor { get; }
 
-    private bool IsEqual(Unit other)
+    protected bool IsEqual(Unit other)
     {
       return 
         string.Equals(Name, other.Name, StringComparison.Ordinal) && 
         string.Equals(Display, other.Display, StringComparison.Ordinal);
     }
+
+    public abstract bool CanConvertTo(Unit other);
 
     public override int GetHashCode()
     {

@@ -106,7 +106,7 @@ namespace NutritionCalc
 
     private static bool TryGetServingSize(BaseIngredient ingredient, Unit unit, out IServingSize size)
     {
-      size = ingredient.Servings.SingleOrDefault(s => s.Unit?.Equals(unit) ?? false);
+      size = ingredient.Servings.SingleOrDefault(s => s.Unit?.CanConvertTo(unit) ?? false);
       return (size != null);
     }
 
