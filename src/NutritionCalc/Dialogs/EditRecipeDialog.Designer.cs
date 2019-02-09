@@ -35,7 +35,7 @@
       DevExpress.XtraLayout.ColumnDefinition columnDefinition4 = new DevExpress.XtraLayout.ColumnDefinition();
       DevExpress.XtraLayout.RowDefinition rowDefinition1 = new DevExpress.XtraLayout.RowDefinition();
       this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-      this.btnDeleteRecipe = new DevExpress.XtraEditors.SimpleButton();
+      this.btnReset = new DevExpress.XtraEditors.SimpleButton();
       this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
       this.btnOK = new DevExpress.XtraEditors.SimpleButton();
       this.gridItems = new DevExpress.XtraGrid.GridControl();
@@ -65,9 +65,10 @@
       this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
       this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::NutritionCalc.ParseWaitForm), false, false);
+      this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridItems)).BeginInit();
@@ -90,13 +91,13 @@
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
       this.SuspendLayout();
       // 
       // layoutControl1
       // 
-      this.layoutControl1.Controls.Add(this.btnDeleteRecipe);
+      this.layoutControl1.Controls.Add(this.btnReset);
       this.layoutControl1.Controls.Add(this.btnCancel);
       this.layoutControl1.Controls.Add(this.btnOK);
       this.layoutControl1.Controls.Add(this.gridItems);
@@ -108,22 +109,22 @@
       this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.layoutControl1.Location = new System.Drawing.Point(0, 0);
       this.layoutControl1.Name = "layoutControl1";
-      this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1136, 109, 650, 400);
+      this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1136, 112, 650, 400);
       this.layoutControl1.Root = this.layoutControlGroup1;
       this.layoutControl1.Size = new System.Drawing.Size(644, 447);
       this.layoutControl1.TabIndex = 0;
       this.layoutControl1.Text = "layoutControl1";
       // 
-      // btnDeleteRecipe
+      // btnReset
       // 
-      this.btnDeleteRecipe.AutoWidthInLayoutControl = true;
-      this.btnDeleteRecipe.Location = new System.Drawing.Point(12, 413);
-      this.btnDeleteRecipe.Name = "btnDeleteRecipe";
-      this.btnDeleteRecipe.Size = new System.Drawing.Size(40, 22);
-      this.btnDeleteRecipe.StyleController = this.layoutControl1;
-      this.btnDeleteRecipe.TabIndex = 13;
-      this.btnDeleteRecipe.Text = "Delete";
-      this.btnDeleteRecipe.Click += new System.EventHandler(this.btnDeleteRecipe_Click);
+      this.btnReset.AutoWidthInLayoutControl = true;
+      this.btnReset.Location = new System.Drawing.Point(12, 413);
+      this.btnReset.Name = "btnReset";
+      this.btnReset.Size = new System.Drawing.Size(67, 22);
+      this.btnReset.StyleController = this.layoutControl1;
+      this.btnReset.TabIndex = 14;
+      this.btnReset.Text = "Reset Items";
+      this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
       // 
       // btnCancel
       // 
@@ -155,6 +156,7 @@
             this.pctItemState});
       this.gridItems.Size = new System.Drawing.Size(338, 289);
       this.gridItems.TabIndex = 10;
+      this.gridItems.ToolTipController = this.toolTipController1;
       this.gridItems.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewItems});
       // 
@@ -397,12 +399,12 @@
             this.emptySpaceItem3,
             this.layoutControlItem5,
             this.layoutControlItem7,
-            this.layoutControlItem8});
+            this.layoutControlItem9});
       this.layoutControlGroup4.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
       this.layoutControlGroup4.Location = new System.Drawing.Point(0, 401);
       this.layoutControlGroup4.Name = "layoutControlGroup4";
       columnDefinition1.SizeType = System.Windows.Forms.SizeType.AutoSize;
-      columnDefinition1.Width = 44D;
+      columnDefinition1.Width = 71D;
       columnDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
       columnDefinition2.Width = 100D;
       columnDefinition3.SizeType = System.Windows.Forms.SizeType.Absolute;
@@ -423,10 +425,10 @@
       // emptySpaceItem3
       // 
       this.emptySpaceItem3.AllowHotTrack = false;
-      this.emptySpaceItem3.Location = new System.Drawing.Point(44, 0);
+      this.emptySpaceItem3.Location = new System.Drawing.Point(71, 0);
       this.emptySpaceItem3.Name = "emptySpaceItem3";
       this.emptySpaceItem3.OptionsTableLayoutItem.ColumnIndex = 1;
-      this.emptySpaceItem3.Size = new System.Drawing.Size(420, 26);
+      this.emptySpaceItem3.Size = new System.Drawing.Size(393, 26);
       this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
       // 
       // layoutControlItem5
@@ -449,14 +451,14 @@
       this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem7.TextVisible = false;
       // 
-      // layoutControlItem8
+      // layoutControlItem9
       // 
-      this.layoutControlItem8.Control = this.btnDeleteRecipe;
-      this.layoutControlItem8.Location = new System.Drawing.Point(0, 0);
-      this.layoutControlItem8.Name = "layoutControlItem8";
-      this.layoutControlItem8.Size = new System.Drawing.Size(44, 26);
-      this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
-      this.layoutControlItem8.TextVisible = false;
+      this.layoutControlItem9.Control = this.btnReset;
+      this.layoutControlItem9.Location = new System.Drawing.Point(0, 0);
+      this.layoutControlItem9.Name = "layoutControlItem9";
+      this.layoutControlItem9.Size = new System.Drawing.Size(71, 26);
+      this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
+      this.layoutControlItem9.TextVisible = false;
       // 
       // emptySpaceItem4
       // 
@@ -469,6 +471,10 @@
       // splashScreenManager1
       // 
       this.splashScreenManager1.ClosingDelay = 500;
+      // 
+      // toolTipController1
+      // 
+      this.toolTipController1.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.toolTipController1_GetActiveObjectInfo);
       // 
       // EditRecipeDialog
       // 
@@ -502,7 +508,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
       this.ResumeLayout(false);
 
@@ -542,7 +548,8 @@
     private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
     private DevExpress.XtraGrid.Columns.GridColumn colState;
     private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit pctItemState;
-    private DevExpress.XtraEditors.SimpleButton btnDeleteRecipe;
-    private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+    private DevExpress.XtraEditors.SimpleButton btnReset;
+    private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+    private DevExpress.Utils.ToolTipController toolTipController1;
   }
 }

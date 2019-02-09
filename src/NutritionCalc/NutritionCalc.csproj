@@ -155,6 +155,12 @@
     <Compile Include="Controls\UnknownRecipeItemEdit.Designer.cs">
       <DependentUpon>UnknownRecipeItemEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ResetRecipeItemsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ResetRecipeItemsDialog.Designer.cs">
+      <DependentUpon>ResetRecipeItemsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\CustomDialogResult.cs" />
     <Compile Include="View\EditRecipeParams.cs" />
     <Compile Include="View\GroupedItemViewEventArgs.cs" />
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ParseWaitForm.resx">
       <DependentUpon>ParseWaitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ResetRecipeItemsDialog.resx">
+      <DependentUpon>ResetRecipeItemsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

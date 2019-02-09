@@ -165,9 +165,9 @@ namespace NutritionCalc
       DoEditIngredient(new Ingredient { Name = string.Empty }, true);
     }
 
-    private void lstBaseRecipes_MouseDoubleClick(object sender, MouseEventArgs e)
+    private void gridBaseRecipes_MouseDoubleClick(object sender, MouseEventArgs e)
     {
-      if (lstBaseRecipes.SelectedItem is TemplateRecipe recipe)
+      if (gridViewBaseRecipes.GetFocusedRow() is TemplateRecipe recipe)
       {
         DoEditTemplateRecipe(recipe, false);
       }
@@ -178,9 +178,18 @@ namespace NutritionCalc
       DoEditTemplateRecipe(new TemplateRecipe { Name = string.Empty }, true);
     }
 
-    private void lstRecipes_MouseDoubleClick(object sender, MouseEventArgs e)
+    private void btnDeleteBaseRecipe_Click(object sender, EventArgs e)
     {
-      if (lstRecipes.SelectedItem is Recipe recipe)
+      if (gridViewBaseRecipes.GetFocusedRow() is TemplateRecipe recipe && 
+        Confirm($"Are you sure you want to delete {recipe.Name}?"))
+      {
+        templateRecipeBindingSource.Remove(recipe);
+      }
+    }
+
+    private void gridRecipes_MouseDoubleClick(object sender, MouseEventArgs e)
+    {
+      if (gridViewRecipes.GetFocusedRow() is Recipe recipe)
       {
         DoEditRecipe(recipe, false);
       }
@@ -189,6 +198,14 @@ namespace NutritionCalc
     private void btnAddRecipe_Click(object sender, EventArgs e)
     {
       DoEditRecipe(new Recipe { Name = string.Empty }, true);
+    }
+
+    private void btnDeleteRecipe_Click(object sender, EventArgs e)
+    {
+      if (gridViewRecipes.GetFocusedRow() is Recipe recipe && Confirm($"Are you sure you want to delete {recipe.Name}?"))
+      {
+        recipeBindingSource.Remove(recipe);
+      }
     }
   }
 }

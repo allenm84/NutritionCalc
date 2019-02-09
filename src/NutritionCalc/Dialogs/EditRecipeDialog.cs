@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using NutritionCalc.Properties;
+using DevExpress.Utils;
 
 namespace NutritionCalc
 {
@@ -26,7 +27,21 @@ namespace NutritionCalc
 
     private async void DoFindIngredients()
     {
-      var items = recipeItemBindingSource.OfType<RecipeItem>();
+      var ingredientTable = mEditRecipeParams.CreateDictionary();
+      var items = recipeItemBindingSource
+        .OfType<RecipeItem>()
+        .Where(i => !ingredientTable.ContainsKey(i.ItemId ?? string.Empty))
+        .ToArray();
+
+      if (!items.Any())
+      {
+        if (recipeItemBindingSource.Count > 0)
+        {
+          Inform($"All of the items in the recipe have been found. You can reset the items by clicking the {btnReset.Text} button.");
+        }
+        return;
+      }
+
       var task = Task.Run(() => RecipeItemParser.Run(items, mEditRecipeParams.Ingredients).ToArray());
       var delay = Task.Delay(TimeSpan.FromSeconds(1));
 
@@ -51,6 +66,12 @@ namespace NutritionCalc
 
     private async void DoFindTemplateRecipe(RecipeItem item)
     {
+      var ingredientTable = mEditRecipeParams.CreateDictionary();
+      if (!ingredientTable.ContainsKey(item?.ItemId ?? string.Empty))
+      {
+        return;
+      }
+
       var task = Task.Run(() => RecipeItemParser.Run(item, mEditRecipeParams.TemplateRecipes));
       var delay = Task.Delay(TimeSpan.FromSeconds(1));
 
@@ -92,9 +113,6 @@ namespace NutritionCalc
       IsRecipe = (recipe is Recipe);
       nutritionInfoEdit.ReadFrom(recipe);
       lcUseBaseRecipe.ContentVisible = IsRecipe;
-      btnDeleteRecipe.Text = IsRecipe
-        ? "Delete Recipe" 
-        : "Delete Base Recipe";
     }
 
     public void WriteTo(TemplateRecipe recipe)
@@ -141,6 +159,24 @@ namespace NutritionCalc
       }
     }
 
+    private void toolTipController1_GetActiveObjectInfo(object sender, ToolTipControllerGetActiveObjectInfoEventArgs e)
+    {
+      if (e.Info == null && e.SelectedControl == gridItems)
+      {
+        var info = gridViewItems.CalcHitInfo(e.ControlMousePosition);
+        if (info.InRowCell && gridViewItems.GetRow(info.RowHandle) is RecipeItem item && info.Column == colState)
+        {
+          var ingredientTable = mEditRecipeParams.CreateDictionary();
+          if (ingredientTable.TryGetValue(item.ItemId ?? string.Empty, out var ingredient))
+          {
+            var key = $"{info.RowHandle}:{info.Column}";
+            var text = $"Linked to {ingredient.Name}";
+            e.Info = new ToolTipControlInfo(key, text);
+          }
+        }
+      }
+    }
+
     private void gridViewItems_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
     {
       if (e.Column == colBullet)
@@ -180,10 +216,7 @@ namespace NutritionCalc
 
     private void btnFindIngredients_Click(object sender, EventArgs e)
     {
-      if (recipeItemBindingSource.Count > 0)
-      {
-        DoFindIngredients();
-      }
+      DoFindIngredients();
     }
 
     private void btnCalculateNutrition_Click(object sender, EventArgs e)
@@ -246,6 +279,39 @@ namespace NutritionCalc
       {
         InternalCustomDialogResult = CustomDialogResult.Delete;
         Close();
+      }
+    }
+
+    private void btnReset_Click(object sender, EventArgs e)
+    {
+      var ingredientTable = mEditRecipeParams.CreateDictionary();
+      var items = recipeItemBindingSource
+        .OfType<RecipeItem>()
+        .Where(i => ingredientTable.ContainsKey(i.ItemId ?? string.Empty))
+        .ToArray();
+
+      if (!items.Any())
+      {
+        Inform("There is nothing to reset; none of the items have been found.");
+        return;
+      }
+
+      using (var dlg = new ResetRecipeItemsDialog(items))
+      {
+        if (dlg.ShowDialog(this) == DialogResult.OK)
+        {
+          var toReset = dlg.CheckedItems.ToArray();
+          if (toReset.Any())
+          {
+            foreach (var item in toReset)
+            {
+              item.ItemId = string.Empty;
+            }
+
+            gridViewItems.RefreshData();
+            Inform("Selected items have been reset");
+          }
+        }
       }
     }
   }

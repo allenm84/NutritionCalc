@@ -93,6 +93,11 @@ namespace NutritionCalc
         }
       }
 
+      if (!result.Success)
+      {
+
+      }
+
       return result;
     }
   }
