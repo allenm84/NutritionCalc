@@ -65,6 +65,40 @@ namespace NutritionCalc
       }
     }
 
+    public static Unit GetUnit(string text)
+    {
+      return
+        All.FirstOrDefault(u => IsExactMatch(u, text)) ?? 
+        All.FirstOrDefault(u => IsCloseMatch(u, text));
+
+      bool IsExactMatch(Unit unit, string input)
+      {
+        return
+          string.Equals(unit.Display, input, StringComparison.OrdinalIgnoreCase) ||
+          string.Equals(unit.Name, input, StringComparison.OrdinalIgnoreCase);
+      }
+
+      bool IsCloseMatch(Unit unit, string input)
+      {
+        var value = input.ToLower();
+        var display = unit.Display.ToLower();
+        var name = unit.Name.ToLower();
+        return IsSimilar(display, value) || IsSimilar(name, value);
+      }
+
+      bool IsSimilar(string x, string y)
+      {
+        if (x.Length == 1 || y.Length == 1)
+        {
+          return string.Equals(x, y);
+        }
+        else
+        {
+          return StringDistance.Measure(x, y) <= 1;
+        }
+      }
+    }
+
     public static (string id, string typename) ToSelection(Unit unit)
     {
       return (unit.Name, unit.GetType().Name);

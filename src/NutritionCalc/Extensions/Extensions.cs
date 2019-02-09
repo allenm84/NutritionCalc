@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -10,6 +11,17 @@ namespace NutritionCalc
 {
   public static class Extensions
   {
+    public static string N2(this decimal value)
+    {
+      return $"{value:N2}";
+    }
+
+    public static bool TryMatch(this Regex regex, string input, out Match match)
+    {
+      match = regex.Match(input);
+      return match.Success;
+    }
+
     public static T Clone<T>(this T value)
     {
       var json = JsonConvert.SerializeObject(value);

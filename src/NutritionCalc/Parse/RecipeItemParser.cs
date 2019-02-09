@@ -9,22 +9,14 @@ namespace NutritionCalc
 {
   public static class RecipeItemParser
   {
-    private static readonly Regex[] sRegexAttempts;
+    private static readonly Regex sFraction = 
+      new Regex(@"(?<fraction>(?<whole>\d+ )?(?<numerator>\d+)\/(?<denominator>\d+))(?<text>.+)?", RegexOptions.Compiled);
 
-    static RecipeItemParser()
-    {
-      // First, try to match what she typed to regex patterns:
-      // * (\d+) (\d+\/\d+) (\w+) (\w+ )?(.+)   [2 1/4 Cups of Flour]
-      // * (\d+\.\d+) (\w+) (\w+ )?(.+)         [2.25 Cups of Flour]
-      // * (\d+) (\w+) (\w+ )?(.+)              [2 Cups of Flour]
+    private static readonly Regex sDecimal =
+      new Regex(@"(?<decimal>\d+\.\d+)(?<text>.+)?", RegexOptions.Compiled);
 
-      sRegexAttempts = new[]
-      {
-        new Regex(@"(?<n>\d+ )?(?<f>\d+\/\d+) (?<u>\w+) (?<of>\w+ )?(?<name>.+)", RegexOptions.IgnoreCase),
-        new Regex(@"(?<n>(\d+)?\.\d+) (?<u>\w+) (?<of>\w+ )?(?<name>.+)", RegexOptions.IgnoreCase),
-        new Regex(@"(?<n>\d+) (?<u>\w+) (?<of>\w+ )?(?<name>.+)", RegexOptions.IgnoreCase),
-      };
-    }
+    private static readonly Regex sInteger =
+      new Regex(@"(?<int>\d+)(?<text>.+)?", RegexOptions.Compiled);
 
     private static IEnumerable<T> FindIngredient<T>(string name, T[] ingredients)
       where T : BaseIngredient
@@ -33,6 +25,73 @@ namespace NutritionCalc
       var pattern = string.Join("|", words.Select(n => $"({n})"));
       var regex = new Regex(pattern, RegexOptions.IgnoreCase);
       return ingredients.Where(i => regex.IsMatch(i.Name));
+    }
+
+    private static bool TryParseQuantity(string input, out (decimal quantity, string remainingText) result)
+    {
+      var value = 0m;
+      var text = string.Empty;
+      var success = true;
+
+      try
+      {
+        if (sFraction.TryMatch(input, out var fracMatch))
+        {
+          value = 0;
+          var whole = fracMatch.Groups["whole"].Value.Trim();
+          if (!string.IsNullOrWhiteSpace(whole))
+          {
+            value = decimal.Parse(whole);
+          }
+
+          var numerator = decimal.Parse(fracMatch.Groups["numerator"].Value);
+          var denominator = decimal.Parse(fracMatch.Groups["denominator"].Value);
+          value += decimal.Divide(numerator, denominator);
+          text = GetText(fracMatch);
+        }
+        else if (sDecimal.TryMatch(input, out var decMatch))
+        {
+          value = decimal.Parse(decMatch.Groups["decimal"].Value);
+          text = GetText(decMatch);
+        }
+        else if (sInteger.TryMatch(input, out var intMatch))
+        {
+          value = decimal.Parse(intMatch.Groups["int"].Value);
+          text = GetText(intMatch);
+        }
+        else
+        {
+          success = false;
+        }
+      }
+      catch
+      {
+        success = false;
+      }
+
+      result = (value, text);
+      return success;
+
+      string GetText(Match m) => m.Groups["text"].Value;
+    }
+
+    private static bool TryParseUnit(string input, out Unit unit)
+    {
+      unit = null;
+      
+      var words = input.Split(' ').ToList();
+      for (int i = 0; unit == null && i < words.Count; ++i)
+      {
+        var word = words[i];
+        if (string.Equals("of", word, StringComparison.OrdinalIgnoreCase))
+        {
+          continue;
+        }
+
+        unit = Units.GetUnit(word);
+      }
+
+      return (unit != null);
     }
 
     public static IEnumerable<RecipeItemParseResult> Run<T>(IEnumerable<RecipeItem> items, IEnumerable<T> pool)
@@ -56,46 +115,27 @@ namespace NutritionCalc
     {
       var result = new RecipeItemParseResult(item);
 
-      foreach (var r in sRegexAttempts)
+      if (TryParseQuantity(item.Text, out var value))
       {
-        var m = r.Match(item.Text);
-        if (m.Success)
+        var text = value.remainingText.Trim();
+        if (TryParseUnit(text, out var unit))
         {
-          try
-          {
-            var quantity = 0m;
-            var n = m.Groups["n"];
-            if (n.Success)
-            {
-              quantity += decimal.Parse(n.Value);
-            }
-
-            var f = m.Groups["f"];
-            if (f.Success)
-            {
-              var parts = f.Value.Split('/');
-              quantity += decimal.Divide(decimal.Parse(parts[0]), decimal.Parse(parts[1]));
-            }
-
-            var searchText = m.Groups["name"].Value;
-            result.SearchText = searchText;
-            result.Quantity = quantity;
-            result.Unit = Units.FindUnit(m.Groups["u"].Value);
-
-            result.Ingredients = FindIngredient(searchText, ingredients).ToArray();
-            result.Success = result.Ingredients.Length > 0;
-            break;
-          }
-          catch (Exception ex)
-          {
-            result.Error = ex;
-          }
+          result.SearchText = text;
+          result.Quantity = value.quantity;
+          result.Unit = unit;
+          result.Ingredients = FindIngredient(text, ingredients).ToArray();
+          result.Success = result.Ingredients.Length > 0;
+        }
+        else
+        {
+          result.Error = new Exception($"Couldn't find unit within the text '{text}'");
+          result.Success = false;
         }
       }
-
-      if (!result.Success)
+      else
       {
-
+        result.Error = new Exception($"Couldn't get the quantity from '{item.Text}'");
+        result.Success = false;
       }
 
       return result;

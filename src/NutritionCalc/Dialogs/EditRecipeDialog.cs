@@ -206,6 +206,15 @@ namespace NutritionCalc
       }
     }
 
+    private void gridViewItems_ShowingEditor(object sender, CancelEventArgs e)
+    {
+      if (gridViewItems.GetFocusedRow() is RecipeItem item)
+      {
+        var ingredientTable = mEditRecipeParams.CreateDictionary();
+        e.Cancel = ingredientTable.ContainsKey(item.ItemId ?? string.Empty);
+      }
+    }
+
     private void btnUseBaseRecipe_Click(object sender, EventArgs e)
     {
       if (gridViewItems.GetFocusedRow() is RecipeItem item)
@@ -248,8 +257,33 @@ namespace NutritionCalc
           }
           else
           {
-            var unitType = item.UnitTypeName;
-            errorMessage = $"You entered in a {unitType}, but {ingredient.Name} does not have a {unitType} defined";
+            var sb = new StringBuilder();
+            sb.AppendLine($"You entered in a {unit.Display}, but {ingredient.Name} does not have a {unit.Display} defined");
+
+            var units = new List<string>();
+            foreach (var serving in ingredient.Servings)
+            {
+              if (serving.Unit != null)
+              {
+                units.Add(serving.Unit.Display);
+              }
+            }
+
+            sb.AppendLine();
+            if (units.Count > 0)
+            {
+              sb.AppendLine($"{ingredient.Name} has these units defined:");
+              foreach (var value in units)
+              {
+                sb.AppendLine($"  * {value}");
+              }
+            }
+            else
+            {
+              sb.AppendLine($"Actually, {ingredient.Name} has no units defined.");
+            }
+
+            errorMessage = $"{sb}";
             succeeded = false;
             break;
           }
@@ -311,6 +345,36 @@ namespace NutritionCalc
             gridViewItems.RefreshData();
             Inform("Selected items have been reset");
           }
+        }
+      }
+    }
+
+    private void btnMultiply_Click(object sender, EventArgs e)
+    {
+      using (var dlg = new NumberEntryDialog())
+      {
+        dlg.Text = "Multiply";
+        dlg.Prompt = "Multiply By:";
+        if (dlg.ShowDialog(this) == DialogResult.OK)
+        {
+          var value = nutritionInfoEdit.Nutrition;
+          value *= dlg.Value;
+          nutritionInfoEdit.ReadNutrition(value);
+        }
+      }
+    }
+
+    private void btnDivide_Click(object sender, EventArgs e)
+    {
+      using (var dlg = new NumberEntryDialog())
+      {
+        dlg.Text = "Divide";
+        dlg.Prompt = "Divide By:";
+        if (dlg.ShowDialog(this) == DialogResult.OK)
+        {
+          var value = nutritionInfoEdit.Nutrition;
+          value /= dlg.Value;
+          nutritionInfoEdit.ReadNutrition(value);
         }
       }
     }

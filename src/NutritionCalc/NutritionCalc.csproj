@@ -122,6 +122,12 @@
     <Compile Include="Helpers\ControlHelper.cs" />
     <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\StringDistance.cs" />
+    <Compile Include="Dialogs\NumberEntryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\NumberEntryDialog.Designer.cs">
+      <DependentUpon>NumberEntryDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Parse\RecipeItemParser.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -194,6 +200,9 @@
     <EmbeddedResource Include="Controls\GroupedItemView.resx">
       <DependentUpon>GroupedItemView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\NumberEntryDialog.resx">
+      <DependentUpon>NumberEntryDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -233,6 +242,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\multiply.png" />
+    <None Include="Resources\divide.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

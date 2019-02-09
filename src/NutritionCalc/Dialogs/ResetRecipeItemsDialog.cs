@@ -12,7 +12,7 @@ using DevExpress.XtraEditors.Controls;
 
 namespace NutritionCalc
 {
-  public partial class ResetRecipeItemsDialog : DevExpress.XtraEditors.XtraForm
+  public partial class ResetRecipeItemsDialog : BaseForm
   {
     public ResetRecipeItemsDialog(IEnumerable<RecipeItem> items)
     {

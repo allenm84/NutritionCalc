@@ -35,6 +35,8 @@
       DevExpress.XtraLayout.ColumnDefinition columnDefinition4 = new DevExpress.XtraLayout.ColumnDefinition();
       DevExpress.XtraLayout.RowDefinition rowDefinition1 = new DevExpress.XtraLayout.RowDefinition();
       this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+      this.btnDivide = new DevExpress.XtraEditors.SimpleButton();
+      this.btnMultiply = new DevExpress.XtraEditors.SimpleButton();
       this.btnReset = new DevExpress.XtraEditors.SimpleButton();
       this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
       this.btnOK = new DevExpress.XtraEditors.SimpleButton();
@@ -45,6 +47,7 @@
       this.colText = new DevExpress.XtraGrid.Columns.GridColumn();
       this.colState = new DevExpress.XtraGrid.Columns.GridColumn();
       this.pctItemState = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
+      this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
       this.btnFindIngredients = new DevExpress.XtraEditors.SimpleButton();
       this.btnUseBaseRecipe = new DevExpress.XtraEditors.SimpleButton();
       this.btnCalculateNutrition = new DevExpress.XtraEditors.SimpleButton();
@@ -61,6 +64,8 @@
       this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
       this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+      this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
       this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -68,7 +73,6 @@
       this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::NutritionCalc.ParseWaitForm), false, false);
-      this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridItems)).BeginInit();
@@ -87,6 +91,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
@@ -97,6 +103,8 @@
       // 
       // layoutControl1
       // 
+      this.layoutControl1.Controls.Add(this.btnDivide);
+      this.layoutControl1.Controls.Add(this.btnMultiply);
       this.layoutControl1.Controls.Add(this.btnReset);
       this.layoutControl1.Controls.Add(this.btnCancel);
       this.layoutControl1.Controls.Add(this.btnOK);
@@ -109,16 +117,42 @@
       this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.layoutControl1.Location = new System.Drawing.Point(0, 0);
       this.layoutControl1.Name = "layoutControl1";
-      this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1136, 112, 650, 400);
+      this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1136, 113, 650, 400);
       this.layoutControl1.Root = this.layoutControlGroup1;
       this.layoutControl1.Size = new System.Drawing.Size(644, 447);
       this.layoutControl1.TabIndex = 0;
       this.layoutControl1.Text = "layoutControl1";
       // 
+      // btnDivide
+      // 
+      this.btnDivide.AutoWidthInLayoutControl = true;
+      this.btnDivide.ImageOptions.Image = global::NutritionCalc.Properties.Resources.divide;
+      this.btnDivide.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      this.btnDivide.Location = new System.Drawing.Point(409, 359);
+      this.btnDivide.Name = "btnDivide";
+      this.btnDivide.Size = new System.Drawing.Size(32, 30);
+      this.btnDivide.StyleController = this.layoutControl1;
+      this.btnDivide.TabIndex = 16;
+      this.btnDivide.ToolTip = "Divide Nutrition By...";
+      this.btnDivide.Click += new System.EventHandler(this.btnDivide_Click);
+      // 
+      // btnMultiply
+      // 
+      this.btnMultiply.AutoWidthInLayoutControl = true;
+      this.btnMultiply.ImageOptions.Image = global::NutritionCalc.Properties.Resources.multiply;
+      this.btnMultiply.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+      this.btnMultiply.Location = new System.Drawing.Point(373, 359);
+      this.btnMultiply.Name = "btnMultiply";
+      this.btnMultiply.Size = new System.Drawing.Size(32, 30);
+      this.btnMultiply.StyleController = this.layoutControl1;
+      this.btnMultiply.TabIndex = 15;
+      this.btnMultiply.ToolTip = "Multiply Nutrition By...";
+      this.btnMultiply.Click += new System.EventHandler(this.btnMultiply_Click);
+      // 
       // btnReset
       // 
       this.btnReset.AutoWidthInLayoutControl = true;
-      this.btnReset.Location = new System.Drawing.Point(12, 413);
+      this.btnReset.Location = new System.Drawing.Point(12, 415);
       this.btnReset.Name = "btnReset";
       this.btnReset.Size = new System.Drawing.Size(67, 22);
       this.btnReset.StyleController = this.layoutControl1;
@@ -129,7 +163,7 @@
       // btnCancel
       // 
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(556, 413);
+      this.btnCancel.Location = new System.Drawing.Point(539, 415);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(76, 22);
       this.btnCancel.StyleController = this.layoutControl1;
@@ -139,7 +173,7 @@
       // btnOK
       // 
       this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.btnOK.Location = new System.Drawing.Point(476, 413);
+      this.btnOK.Location = new System.Drawing.Point(459, 415);
       this.btnOK.Name = "btnOK";
       this.btnOK.Size = new System.Drawing.Size(76, 22);
       this.btnOK.StyleController = this.layoutControl1;
@@ -154,7 +188,7 @@
       this.gridItems.Name = "gridItems";
       this.gridItems.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.pctItemState});
-      this.gridItems.Size = new System.Drawing.Size(338, 289);
+      this.gridItems.Size = new System.Drawing.Size(321, 297);
       this.gridItems.TabIndex = 10;
       this.gridItems.ToolTipController = this.toolTipController1;
       this.gridItems.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -181,6 +215,7 @@
       this.gridViewItems.OptionsView.ShowHorizontalLines = DevExpress.Utils.DefaultBoolean.False;
       this.gridViewItems.OptionsView.ShowIndicator = false;
       this.gridViewItems.OptionsView.ShowVerticalLines = DevExpress.Utils.DefaultBoolean.False;
+      this.gridViewItems.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gridViewItems_ShowingEditor);
       this.gridViewItems.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridViewItems_CustomUnboundColumnData);
       this.gridViewItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridViewItems_KeyDown);
       // 
@@ -232,10 +267,14 @@
       this.pctItemState.ShowMenu = false;
       this.pctItemState.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
       // 
+      // toolTipController1
+      // 
+      this.toolTipController1.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.toolTipController1_GetActiveObjectInfo);
+      // 
       // btnFindIngredients
       // 
       this.btnFindIngredients.AutoWidthInLayoutControl = true;
-      this.btnFindIngredients.Location = new System.Drawing.Point(275, 359);
+      this.btnFindIngredients.Location = new System.Drawing.Point(258, 367);
       this.btnFindIngredients.Name = "btnFindIngredients";
       this.btnFindIngredients.Size = new System.Drawing.Size(87, 22);
       this.btnFindIngredients.StyleController = this.layoutControl1;
@@ -246,7 +285,7 @@
       // btnUseBaseRecipe
       // 
       this.btnUseBaseRecipe.AutoWidthInLayoutControl = true;
-      this.btnUseBaseRecipe.Location = new System.Drawing.Point(24, 359);
+      this.btnUseBaseRecipe.Location = new System.Drawing.Point(24, 367);
       this.btnUseBaseRecipe.Name = "btnUseBaseRecipe";
       this.btnUseBaseRecipe.Size = new System.Drawing.Size(88, 22);
       this.btnUseBaseRecipe.StyleController = this.layoutControl1;
@@ -257,7 +296,7 @@
       // btnCalculateNutrition
       // 
       this.btnCalculateNutrition.AutoWidthInLayoutControl = true;
-      this.btnCalculateNutrition.Location = new System.Drawing.Point(523, 359);
+      this.btnCalculateNutrition.Location = new System.Drawing.Point(506, 363);
       this.btnCalculateNutrition.Name = "btnCalculateNutrition";
       this.btnCalculateNutrition.Size = new System.Drawing.Size(97, 22);
       this.btnCalculateNutrition.StyleController = this.layoutControl1;
@@ -268,7 +307,7 @@
       // nutritionInfoEdit
       // 
       this.nutritionInfoEdit.CanEditNutrition = false;
-      this.nutritionInfoEdit.Location = new System.Drawing.Point(390, 66);
+      this.nutritionInfoEdit.Location = new System.Drawing.Point(373, 66);
       this.nutritionInfoEdit.Name = "nutritionInfoEdit";
       this.nutritionInfoEdit.Size = new System.Drawing.Size(230, 289);
       this.nutritionInfoEdit.TabIndex = 6;
@@ -277,7 +316,7 @@
       // 
       this.txtRecipeName.Location = new System.Drawing.Point(12, 12);
       this.txtRecipeName.Name = "txtRecipeName";
-      this.txtRecipeName.Size = new System.Drawing.Size(620, 20);
+      this.txtRecipeName.Size = new System.Drawing.Size(603, 20);
       this.txtRecipeName.StyleController = this.layoutControl1;
       this.txtRecipeName.TabIndex = 4;
       // 
@@ -292,7 +331,7 @@
             this.layoutControlGroup4,
             this.emptySpaceItem4});
       this.layoutControlGroup1.Name = "Root";
-      this.layoutControlGroup1.Size = new System.Drawing.Size(644, 447);
+      this.layoutControlGroup1.Size = new System.Drawing.Size(627, 449);
       this.layoutControlGroup1.TextVisible = false;
       // 
       // layoutControlItem1
@@ -300,7 +339,7 @@
       this.layoutControlItem1.Control = this.txtRecipeName;
       this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
       this.layoutControlItem1.Name = "layoutControlItem1";
-      this.layoutControlItem1.Size = new System.Drawing.Size(624, 24);
+      this.layoutControlItem1.Size = new System.Drawing.Size(607, 24);
       this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem1.TextVisible = false;
       // 
@@ -313,13 +352,13 @@
             this.layoutControlItem2});
       this.layoutControlGroup2.Location = new System.Drawing.Point(0, 24);
       this.layoutControlGroup2.Name = "layoutControlGroup2";
-      this.layoutControlGroup2.Size = new System.Drawing.Size(366, 361);
+      this.layoutControlGroup2.Size = new System.Drawing.Size(349, 369);
       this.layoutControlGroup2.Text = "Recipe:";
       // 
       // lcUseBaseRecipe
       // 
       this.lcUseBaseRecipe.Control = this.btnUseBaseRecipe;
-      this.lcUseBaseRecipe.Location = new System.Drawing.Point(0, 293);
+      this.lcUseBaseRecipe.Location = new System.Drawing.Point(0, 301);
       this.lcUseBaseRecipe.Name = "lcUseBaseRecipe";
       this.lcUseBaseRecipe.Size = new System.Drawing.Size(92, 26);
       this.lcUseBaseRecipe.TextSize = new System.Drawing.Size(0, 0);
@@ -328,7 +367,7 @@
       // layoutControlItem6
       // 
       this.layoutControlItem6.Control = this.btnFindIngredients;
-      this.layoutControlItem6.Location = new System.Drawing.Point(251, 293);
+      this.layoutControlItem6.Location = new System.Drawing.Point(234, 301);
       this.layoutControlItem6.Name = "layoutControlItem6";
       this.layoutControlItem6.Size = new System.Drawing.Size(91, 26);
       this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
@@ -337,9 +376,9 @@
       // emptySpaceItem2
       // 
       this.emptySpaceItem2.AllowHotTrack = false;
-      this.emptySpaceItem2.Location = new System.Drawing.Point(92, 293);
+      this.emptySpaceItem2.Location = new System.Drawing.Point(92, 301);
       this.emptySpaceItem2.Name = "emptySpaceItem2";
-      this.emptySpaceItem2.Size = new System.Drawing.Size(159, 26);
+      this.emptySpaceItem2.Size = new System.Drawing.Size(142, 26);
       this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
       // 
       // layoutControlItem2
@@ -347,7 +386,7 @@
       this.layoutControlItem2.Control = this.gridItems;
       this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
       this.layoutControlItem2.Name = "layoutControlItem2";
-      this.layoutControlItem2.Size = new System.Drawing.Size(342, 293);
+      this.layoutControlItem2.Size = new System.Drawing.Size(325, 301);
       this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem2.TextVisible = false;
       // 
@@ -356,10 +395,12 @@
       this.layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem3,
             this.layoutControlItem4,
-            this.emptySpaceItem1});
-      this.layoutControlGroup3.Location = new System.Drawing.Point(366, 24);
+            this.emptySpaceItem1,
+            this.layoutControlItem8,
+            this.layoutControlItem10});
+      this.layoutControlGroup3.Location = new System.Drawing.Point(349, 24);
       this.layoutControlGroup3.Name = "layoutControlGroup3";
-      this.layoutControlGroup3.Size = new System.Drawing.Size(258, 361);
+      this.layoutControlGroup3.Size = new System.Drawing.Size(258, 369);
       this.layoutControlGroup3.Text = "Overall Nutrition:";
       // 
       // layoutControlItem3
@@ -378,19 +419,39 @@
       // layoutControlItem4
       // 
       this.layoutControlItem4.Control = this.btnCalculateNutrition;
+      this.layoutControlItem4.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
       this.layoutControlItem4.Location = new System.Drawing.Point(133, 293);
       this.layoutControlItem4.Name = "layoutControlItem4";
-      this.layoutControlItem4.Size = new System.Drawing.Size(101, 26);
+      this.layoutControlItem4.Size = new System.Drawing.Size(101, 34);
       this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem4.TextVisible = false;
+      this.layoutControlItem4.TrimClientAreaToControl = false;
       // 
       // emptySpaceItem1
       // 
       this.emptySpaceItem1.AllowHotTrack = false;
-      this.emptySpaceItem1.Location = new System.Drawing.Point(0, 293);
+      this.emptySpaceItem1.Location = new System.Drawing.Point(72, 293);
       this.emptySpaceItem1.Name = "emptySpaceItem1";
-      this.emptySpaceItem1.Size = new System.Drawing.Size(133, 26);
+      this.emptySpaceItem1.Size = new System.Drawing.Size(61, 34);
       this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+      // 
+      // layoutControlItem8
+      // 
+      this.layoutControlItem8.Control = this.btnMultiply;
+      this.layoutControlItem8.Location = new System.Drawing.Point(0, 293);
+      this.layoutControlItem8.Name = "layoutControlItem8";
+      this.layoutControlItem8.Size = new System.Drawing.Size(36, 34);
+      this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
+      this.layoutControlItem8.TextVisible = false;
+      // 
+      // layoutControlItem10
+      // 
+      this.layoutControlItem10.Control = this.btnDivide;
+      this.layoutControlItem10.Location = new System.Drawing.Point(36, 293);
+      this.layoutControlItem10.Name = "layoutControlItem10";
+      this.layoutControlItem10.Size = new System.Drawing.Size(36, 34);
+      this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
+      this.layoutControlItem10.TextVisible = false;
       // 
       // layoutControlGroup4
       // 
@@ -401,7 +462,7 @@
             this.layoutControlItem7,
             this.layoutControlItem9});
       this.layoutControlGroup4.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
-      this.layoutControlGroup4.Location = new System.Drawing.Point(0, 401);
+      this.layoutControlGroup4.Location = new System.Drawing.Point(0, 403);
       this.layoutControlGroup4.Name = "layoutControlGroup4";
       columnDefinition1.SizeType = System.Windows.Forms.SizeType.AutoSize;
       columnDefinition1.Width = 71D;
@@ -420,7 +481,7 @@
       rowDefinition1.SizeType = System.Windows.Forms.SizeType.Percent;
       this.layoutControlGroup4.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
             rowDefinition1});
-      this.layoutControlGroup4.Size = new System.Drawing.Size(624, 26);
+      this.layoutControlGroup4.Size = new System.Drawing.Size(607, 26);
       // 
       // emptySpaceItem3
       // 
@@ -428,13 +489,13 @@
       this.emptySpaceItem3.Location = new System.Drawing.Point(71, 0);
       this.emptySpaceItem3.Name = "emptySpaceItem3";
       this.emptySpaceItem3.OptionsTableLayoutItem.ColumnIndex = 1;
-      this.emptySpaceItem3.Size = new System.Drawing.Size(393, 26);
+      this.emptySpaceItem3.Size = new System.Drawing.Size(376, 26);
       this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
       // 
       // layoutControlItem5
       // 
       this.layoutControlItem5.Control = this.btnOK;
-      this.layoutControlItem5.Location = new System.Drawing.Point(464, 0);
+      this.layoutControlItem5.Location = new System.Drawing.Point(447, 0);
       this.layoutControlItem5.Name = "layoutControlItem5";
       this.layoutControlItem5.OptionsTableLayoutItem.ColumnIndex = 2;
       this.layoutControlItem5.Size = new System.Drawing.Size(80, 26);
@@ -444,7 +505,7 @@
       // layoutControlItem7
       // 
       this.layoutControlItem7.Control = this.btnCancel;
-      this.layoutControlItem7.Location = new System.Drawing.Point(544, 0);
+      this.layoutControlItem7.Location = new System.Drawing.Point(527, 0);
       this.layoutControlItem7.Name = "layoutControlItem7";
       this.layoutControlItem7.OptionsTableLayoutItem.ColumnIndex = 3;
       this.layoutControlItem7.Size = new System.Drawing.Size(80, 26);
@@ -463,18 +524,14 @@
       // emptySpaceItem4
       // 
       this.emptySpaceItem4.AllowHotTrack = false;
-      this.emptySpaceItem4.Location = new System.Drawing.Point(0, 385);
+      this.emptySpaceItem4.Location = new System.Drawing.Point(0, 393);
       this.emptySpaceItem4.Name = "emptySpaceItem4";
-      this.emptySpaceItem4.Size = new System.Drawing.Size(624, 16);
+      this.emptySpaceItem4.Size = new System.Drawing.Size(607, 10);
       this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
       // 
       // splashScreenManager1
       // 
       this.splashScreenManager1.ClosingDelay = 500;
-      // 
-      // toolTipController1
-      // 
-      this.toolTipController1.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.toolTipController1_GetActiveObjectInfo);
       // 
       // EditRecipeDialog
       // 
@@ -504,6 +561,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
@@ -551,5 +610,9 @@
     private DevExpress.XtraEditors.SimpleButton btnReset;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
     private DevExpress.Utils.ToolTipController toolTipController1;
+    private DevExpress.XtraEditors.SimpleButton btnMultiply;
+    private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+    private DevExpress.XtraEditors.SimpleButton btnDivide;
+    private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
   }
 }

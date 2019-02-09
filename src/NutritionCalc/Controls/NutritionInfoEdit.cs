@@ -39,6 +39,19 @@ namespace NutritionCalc
       }
     }
 
+    [Browsable(false)]
+    public NutritionInfo Nutrition => new NutritionInfo
+    {
+      AdditionalSugar = numAdditionalSugar.Value(),
+      Calories = numCalories.Value(),
+      Carbs = numCarbs.Value(),
+      Fat = numFat.Value(),
+      Fiber = numFiber.Value(),
+      Protein = numProtein.Value(),
+      Sodium = numSodium.Value(),
+      Sugar = numSugar.Value(),
+    };
+
     private void InitializeUnits()
     {
       PopulateLookUp(cboWeightUnits, Units.Weight);
@@ -82,13 +95,13 @@ namespace NutritionCalc
 
     public void ReadFrom(BaseIngredient ingredient)
     {
-      numServingSizeWeight.Text = $"{ingredient.ServingSizeWeight.Amount}";
+      numServingSizeWeight.Text = ingredient.ServingSizeWeight.Amount.N2();
       cboWeightUnits.EditValue = ingredient.ServingSizeWeight.Unit;
 
-      numServingSizeVolume.Text = $"{ingredient.ServingSizeVolume.Amount}";
+      numServingSizeVolume.Text = ingredient.ServingSizeVolume.Amount.N2();
       cboVolumeUnits.EditValue = ingredient.ServingSizeVolume.Unit;
 
-      numServingSizeCustom.Text = $"{ingredient.ServingSizeCustom.Amount}";
+      numServingSizeCustom.Text = ingredient.ServingSizeCustom.Amount.N2();
       cboCustomUnits.EditValue = ingredient.ServingSizeCustom.Unit;
 
       ReadNutrition(ingredient.Nutrition);
@@ -96,14 +109,14 @@ namespace NutritionCalc
 
     public void ReadNutrition(NutritionInfo nutrition)
     {
-      numCalories.Text = $"{nutrition.Calories}";
-      numFat.Text = $"{nutrition.Fat}";
-      numSodium.Text = $"{nutrition.Sodium}";
-      numCarbs.Text = $"{nutrition.Carbs}";
-      numFiber.Text = $"{nutrition.Fiber}";
-      numSugar.Text = $"{nutrition.Sugar}";
-      numAdditionalSugar.Text = $"{nutrition.AdditionalSugar}";
-      numProtein.Text = $"{nutrition.Protein}";
+      numCalories.Text = nutrition.Calories.N2();
+      numFat.Text = nutrition.Fat.N2();
+      numSodium.Text = nutrition.Sodium.N2();
+      numCarbs.Text = nutrition.Carbs.N2();
+      numFiber.Text = nutrition.Fiber.N2();
+      numSugar.Text = nutrition.Sugar.N2();
+      numAdditionalSugar.Text = nutrition.AdditionalSugar.N2();
+      numProtein.Text = nutrition.Protein.N2();
     }
 
     public void WriteTo(BaseIngredient ingredient)
@@ -123,17 +136,7 @@ namespace NutritionCalc
         ingredient.ServingSizeCustom = new ServingSize<CustomUnit> { Amount = numServingSizeCustom.Value(), Unit = custom };
       }
 
-      ingredient.Nutrition = new NutritionInfo
-      {
-        AdditionalSugar = numAdditionalSugar.Value(),
-        Calories = numCalories.Value(),
-        Carbs = numCarbs.Value(),
-        Fat = numFat.Value(),
-        Fiber = numFiber.Value(),
-        Protein = numProtein.Value(),
-        Sodium = numSodium.Value(),
-        Sugar = numSugar.Value(),
-      };
+      ingredient.Nutrition = Nutrition;
     }
 
     private void num_TextChanged(object sender, EventArgs e)
