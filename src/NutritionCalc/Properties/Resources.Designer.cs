@@ -63,6 +63,16 @@ namespace NutritionCalc.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap calculator {
+            get {
+                object obj = ResourceManager.GetObject("calculator", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap divide {
             get {
                 object obj = ResourceManager.GetObject("divide", resourceCulture);
@@ -77,6 +87,33 @@ namespace NutritionCalc.Properties {
             get {
                 object obj = ResourceManager.GetObject("multiply", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not a number. Make sure you enter the decimal value (.e.g 0.25 instead of 1/4).
+        /// </summary>
+        internal static string NotANumberErrorText {
+            get {
+                return ResourceManager.GetString("NotANumberErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please fix any of the errors in the nutrition info..
+        /// </summary>
+        internal static string PleaseFixNutritionErrorText {
+            get {
+                return ResourceManager.GetString("PleaseFixNutritionErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serving size cannot be 0.
+        /// </summary>
+        internal static string SevingSizeCannotBeZeroErrorText {
+            get {
+                return ResourceManager.GetString("SevingSizeCannotBeZeroErrorText", resourceCulture);
             }
         }
         

@@ -53,6 +53,16 @@ namespace NutritionCalc
       }
     }
 
+    private NutritionCalcData GetCurrentData()
+    {
+      return new NutritionCalcData
+      {
+        Ingredients = grpIngredients.OfType<Ingredient>().ToList(),
+        Recipes = recipeBindingSource.OfType<Recipe>().ToList(),
+        TemplateRecipes = templateRecipeBindingSource.OfType<TemplateRecipe>().ToList()
+      };
+    }
+
     private bool DoEditIngredient(Ingredient ingredient, bool isAdding)
     {
       var wasAdded = false;
@@ -144,12 +154,17 @@ namespace NutritionCalc
 
     private void tbbSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
     {
-      var data = new NutritionCalcData();
-      data.Ingredients = grpIngredients.OfType<Ingredient>().ToList();
-      data.Recipes = recipeBindingSource.OfType<Recipe>().ToList();
-      data.TemplateRecipes = templateRecipeBindingSource.OfType<TemplateRecipe>().ToList();
+      var data = GetCurrentData();
       var json = JsonConvert.SerializeObject(data);
       File.WriteAllText(mFilepath, json);
+    }
+
+    private void tbbCalculator_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+    {
+      using (var dlg = new NutritionCalculatorDialog(GetCurrentData()))
+      {
+        dlg.ShowDialog(this);
+      }
     }
 
     private void grpIngredients_ItemClicked(object sender, GroupedItemViewEventArgs e)

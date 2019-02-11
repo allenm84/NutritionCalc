@@ -11,6 +11,21 @@ namespace NutritionCalc
 {
   public static class Extensions
   {
+    public static IEnumerable<T> Enumerate<T>(this T value)
+    {
+      yield return value;
+    }
+
+    public static object At(this BindingSource source, int index)
+    {
+      if (-1 < index && index < source.Count)
+      {
+        return source[index];
+      }
+
+      return null;
+    }
+
     public static string N2(this decimal value)
     {
       return $"{value:N2}";

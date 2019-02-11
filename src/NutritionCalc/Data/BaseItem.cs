@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace NutritionCalc
 {
-  public abstract class BaseItem : IHaveName, INotifyPropertyChanged
+  public abstract class BaseItem : BaseNotifyPropertyChanged, IHaveName
   {
-    public event PropertyChangedEventHandler PropertyChanged;
-
     private string mId = null;
     public string Id
     {
@@ -31,17 +29,6 @@ namespace NutritionCalc
     {
       get { return mName; }
       set { SetField(ref mName, value); }
-    }
-
-    protected void OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-      PropertyChanged?.Invoke(this, e);
-    }
-
-    protected void SetField<T>(ref T field, T value, [CallerMemberName] string name = "")
-    {
-      field = value;
-      OnPropertyChanged(new PropertyChangedEventArgs(name));
     }
   }
 }

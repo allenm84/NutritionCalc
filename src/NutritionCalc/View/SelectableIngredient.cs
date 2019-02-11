@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NutritionCalc
 {
-  public class SelectableIngredient : INotifyPropertyChanged
+  public class SelectableIngredient : BaseNotifyPropertyChanged
   {
     private bool mIsSelected = false;
 
@@ -22,20 +22,9 @@ namespace NutritionCalc
     public bool IsSelected
     {
       get { return mIsSelected; }
-      set
-      {
-        mIsSelected = value;
-        FirePropertyChanged();
-      }
+      set { SetField(ref mIsSelected, value); }
     }
 
     public string Name => Model.Name;
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    private void FirePropertyChanged([CallerMemberName]string name = "")
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-    }
   }
 }

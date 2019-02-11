@@ -111,6 +111,7 @@
       this.btnOK.StyleController = this.layoutControl1;
       this.btnOK.TabIndex = 7;
       this.btnOK.Text = "OK";
+      this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
       // 
       // cboCategory
       // 

@@ -21,6 +21,9 @@ namespace NutritionCalc
     {
       mEditRecipeParams = editRecipeParams;
       InitializeComponent();
+
+      recipeItemBindingSource.RaiseListChangedEvents = true;
+      recipeItemBindingSource.ListChanged += recipeItems_ListChanged;
     }
 
     private bool IsRecipe { get; set; }
@@ -67,8 +70,9 @@ namespace NutritionCalc
     private async void DoFindTemplateRecipe(RecipeItem item)
     {
       var ingredientTable = mEditRecipeParams.CreateDictionary();
-      if (!ingredientTable.ContainsKey(item?.ItemId ?? string.Empty))
+      if (ingredientTable.ContainsKey(item?.ItemId ?? string.Empty))
       {
+        Inform($"{item.Text} has already been found. You can reset it by clicking the {btnReset.Text} button.");
         return;
       }
 
@@ -99,6 +103,101 @@ namespace NutritionCalc
       {
         var input = result.SearchText ?? item.Text;
         Inform($"Unable to find '{input}' in the base recipes", "Failed to Find");
+      }
+    }
+
+    private void DoCalculateNutrition()
+    {
+      var nutrition = new NutritionInfo();
+
+      var succeeded = true;
+      var errorMessage = string.Empty;
+
+      var ingredientTable = mEditRecipeParams.CreateDictionary();
+      foreach (var item in recipeItemBindingSource.OfType<RecipeItem>())
+      {
+        if (ingredientTable.TryGetValue(item.ItemId ?? string.Empty, out BaseIngredient ingredient))
+        {
+          // get the unit that the user entered into the recipe
+          var unit = Units.FromSelection((item.UnitId, item.UnitTypeName));
+          if (TryGetServingSize(ingredient, unit, out IServingSize servingSize))
+          {
+            try
+            {
+              // take the desired amount and convert 
+              var totalUnit = unit.Factor * item.Quantity;
+
+              // lets say the serving size is 5 grams, and we have a total of 10 grams.
+              // To get the factor, we take the total grams and divide by the serving size
+              var servingSizeUnit = servingSize.Unit.Factor * servingSize.Amount;
+              var factor = totalUnit / servingSizeUnit;
+
+              // with this factor, we need to scale the nutrition info
+              nutrition += (ingredient.Nutrition * factor);
+            }
+            catch
+            {
+              var sb = new StringBuilder();
+              sb.AppendLine("There was an error while calculating the nutrition. Make sure the following information is valid:");
+              sb.AppendLine();
+              sb.AppendLine($"Name: {ingredient.Name}");
+              sb.AppendLine($"Serving Size: {servingSize.Amount} {servingSize.Unit.Display}");
+              sb.AppendLine($"Amount: {item.Quantity}");
+              sb.AppendLine();
+              sb.AppendLine("The serving size and amount cannot be 0. You may need to edit the ingredient.");
+              errorMessage = $"{sb}";
+              succeeded = false;
+              break;
+            }
+          }
+          else
+          {
+            var sb = new StringBuilder();
+            sb.AppendLine($"You entered in a {unit.Display}, but {ingredient.Name} does not have a {unit.Display} defined");
+
+            var units = new List<string>();
+            foreach (var serving in ingredient.Servings)
+            {
+              if (serving.Unit != null)
+              {
+                units.Add(serving.Unit.Display);
+              }
+            }
+
+            sb.AppendLine();
+            if (units.Count > 0)
+            {
+              sb.AppendLine($"{ingredient.Name} has these units defined:");
+              foreach (var value in units)
+              {
+                sb.AppendLine($"  * {value}");
+              }
+            }
+            else
+            {
+              sb.AppendLine($"Actually, {ingredient.Name} has no units defined.");
+            }
+
+            errorMessage = $"{sb}";
+            succeeded = false;
+            break;
+          }
+        }
+        else
+        {
+          errorMessage = $"{item.Text} could not be found; nutrition info cannot be calculated.";
+          succeeded = false;
+          break;
+        }
+      }
+
+      if (!succeeded)
+      {
+        ShowError(errorMessage);
+      }
+      else
+      {
+        nutritionInfoEdit.ReadNutrition(nutrition);
       }
     }
 
@@ -156,6 +255,18 @@ namespace NutritionCalc
       else
       {
         return base.ProcessDialogKey(keyData);
+      }
+    }
+
+    private void recipeItems_ListChanged(object sender, ListChangedEventArgs e)
+    {
+      if (e.ListChangedType == ListChangedType.ItemChanged &&
+        recipeItemBindingSource.At(e.NewIndex) is RecipeItem item &&
+        string.IsNullOrWhiteSpace(item.Text))
+      {
+        var row = gridViewItems.GetRowHandle(e.NewIndex);
+        gridViewItems.DeleteRow(row);
+        gridViewItems.RefreshData();
       }
     }
 
@@ -221,6 +332,10 @@ namespace NutritionCalc
       {
         DoFindTemplateRecipe(item);
       }
+      else
+      {
+        Inform($"Make sure you have an item selected. The {btnUseBaseRecipe.Text} button will only work for the currently selected item.");
+      }
     }
 
     private void btnFindIngredients_Click(object sender, EventArgs e)
@@ -230,80 +345,7 @@ namespace NutritionCalc
 
     private void btnCalculateNutrition_Click(object sender, EventArgs e)
     {
-      var nutrition = new NutritionInfo();
-
-      var succeeded = true;
-      var errorMessage = string.Empty;
-
-      var ingredientTable = mEditRecipeParams.CreateDictionary();
-      foreach (var item in recipeItemBindingSource.OfType<RecipeItem>())
-      {
-        if (ingredientTable.TryGetValue(item.ItemId ?? string.Empty, out BaseIngredient ingredient))
-        {
-          // get the unit that the user entered into the recipe
-          var unit = Units.FromSelection((item.UnitId, item.UnitTypeName));
-          if (TryGetServingSize(ingredient, unit, out IServingSize servingSize))
-          {
-            // take the desired amount and convert 
-            var totalUnit = unit.Factor * item.Quantity;
-
-            // lets say the serving size is 5 grams, and we have a total of 10 grams.
-            // To get the factor, we take the total grams and divide by the serving size
-            var servingSizeUnit = servingSize.Unit.Factor * servingSize.Amount;
-            var factor = totalUnit / servingSizeUnit;
-
-            // with this factor, we need to scale the nutrition info
-            nutrition += (ingredient.Nutrition * factor);
-          }
-          else
-          {
-            var sb = new StringBuilder();
-            sb.AppendLine($"You entered in a {unit.Display}, but {ingredient.Name} does not have a {unit.Display} defined");
-
-            var units = new List<string>();
-            foreach (var serving in ingredient.Servings)
-            {
-              if (serving.Unit != null)
-              {
-                units.Add(serving.Unit.Display);
-              }
-            }
-
-            sb.AppendLine();
-            if (units.Count > 0)
-            {
-              sb.AppendLine($"{ingredient.Name} has these units defined:");
-              foreach (var value in units)
-              {
-                sb.AppendLine($"  * {value}");
-              }
-            }
-            else
-            {
-              sb.AppendLine($"Actually, {ingredient.Name} has no units defined.");
-            }
-
-            errorMessage = $"{sb}";
-            succeeded = false;
-            break;
-          }
-        }
-        else
-        {
-          errorMessage = $"{item.Text} could not be found; nutrition info cannot be calculated.";
-          succeeded = false;
-          break;
-        }
-      }
-
-      if (!succeeded)
-      {
-        ShowError(errorMessage);
-      }
-      else
-      {
-        nutritionInfoEdit.ReadNutrition(nutrition);
-      }
+      DoCalculateNutrition();
     }
 
     private void btnDeleteRecipe_Click(object sender, EventArgs e)
@@ -376,6 +418,16 @@ namespace NutritionCalc
           value /= dlg.Value;
           nutritionInfoEdit.ReadNutrition(value);
         }
+      }
+    }
+
+    private void btnOK_Click(object sender, EventArgs e)
+    {
+      var errorText = nutritionInfoEdit.GetErrorText();
+      if (!string.IsNullOrWhiteSpace(errorText))
+      {
+        ShowError(errorText);
+        mCancelClose = true;
       }
     }
   }

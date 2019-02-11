@@ -73,6 +73,7 @@
       this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::NutritionCalc.ParseWaitForm), false, false);
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridItems)).BeginInit();
@@ -179,6 +180,7 @@
       this.btnOK.StyleController = this.layoutControl1;
       this.btnOK.TabIndex = 11;
       this.btnOK.Text = "OK";
+      this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
       // 
       // gridItems
       // 
@@ -614,5 +616,6 @@
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
     private DevExpress.XtraEditors.SimpleButton btnDivide;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
+    private System.Windows.Forms.Timer timer1;
   }
 }

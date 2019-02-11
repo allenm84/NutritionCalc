@@ -12,11 +12,18 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.Data;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
+using NutritionCalc.Properties;
 
 namespace NutritionCalc
 {
   public partial class NutritionInfoEdit : DevExpress.XtraEditors.XtraUserControl
   {
+    private readonly NutritionEditViewModel mViewModel = new NutritionEditViewModel();
+
+    private readonly DecimalTextValue mWeight = new DecimalTextValue();
+    private readonly DecimalTextValue mVolume = new DecimalTextValue();
+    private readonly DecimalTextValue mCustom = new DecimalTextValue();
+
     private bool mCanEditNutrition = true;
 
     public NutritionInfoEdit()
@@ -25,6 +32,20 @@ namespace NutritionCalc
       if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
       {
         InitializeUnits();
+        
+        Bind(mWeight, numServingSizeWeight);
+        Bind(mVolume, numServingSizeVolume);
+        Bind(mCustom, numServingSizeCustom);
+
+        Bind(mViewModel.Calories, numCalories);
+        Bind(mViewModel.Fat, numFat);
+        Bind(mViewModel.Sodium, numSodium);
+        Bind(mViewModel.Carbs, numCarbs);
+        Bind(mViewModel.Fiber, numFiber);
+        Bind(mViewModel.Sugar, numSugar);
+        Bind(mViewModel.AdditionalSugar, numAdditionalSugar);
+        Bind(mViewModel.Protein, numProtein);
+        txtKetoCarbs.DataBindings.Add(nameof(TextEdit.Text), mViewModel, nameof(NutritionEditViewModel.KetoCarbs));
       }
     }
 
@@ -40,23 +61,25 @@ namespace NutritionCalc
     }
 
     [Browsable(false)]
-    public NutritionInfo Nutrition => new NutritionInfo
-    {
-      AdditionalSugar = numAdditionalSugar.Value(),
-      Calories = numCalories.Value(),
-      Carbs = numCarbs.Value(),
-      Fat = numFat.Value(),
-      Fiber = numFiber.Value(),
-      Protein = numProtein.Value(),
-      Sodium = numSodium.Value(),
-      Sugar = numSugar.Value(),
-    };
+    public NutritionInfo Nutrition => mViewModel.Value;
 
     private void InitializeUnits()
     {
       PopulateLookUp(cboWeightUnits, Units.Weight);
       PopulateLookUp(cboVolumeUnits, Units.Volume);
       PopulateLookUp(cboCustomUnits, Units.Custom);
+    }
+
+    private void Bind(DecimalTextValue value, TextEdit text)
+    {
+      text.DataBindings.Add(nameof(TextEdit.Text), value, nameof(DecimalTextValue.Text));
+      value.PropertyChanged += (sender, e) =>
+      {
+        var error = value.IsValid ?
+          string.Empty :
+          Resources.NotANumberErrorText;
+        dxErrorProvider1.SetError(text, error);
+      };
     }
 
     private static void PopulateLookUp<T>(LookUpEdit cboUnits, IEnumerable<T> units) where T : Unit
@@ -73,14 +96,6 @@ namespace NutritionCalc
       });
     }
 
-    private void CalculateKetoCarbs()
-    {
-      var carbs = numCarbs.Value();
-      var fibers = numFiber.Value();
-      var addSugar = numAdditionalSugar.Value();
-      txtKetoCarbs.Text = $"{carbs - (fibers + addSugar)}";
-    }
-
     private void UpdateNutrition()
     {
       numCalories.ReadOnly = !mCanEditNutrition;
@@ -95,13 +110,13 @@ namespace NutritionCalc
 
     public void ReadFrom(BaseIngredient ingredient)
     {
-      numServingSizeWeight.Text = ingredient.ServingSizeWeight.Amount.N2();
+      mWeight.Value = ingredient.ServingSizeWeight.Amount;
       cboWeightUnits.EditValue = ingredient.ServingSizeWeight.Unit;
 
-      numServingSizeVolume.Text = ingredient.ServingSizeVolume.Amount.N2();
+      mVolume.Value = ingredient.ServingSizeVolume.Amount;
       cboVolumeUnits.EditValue = ingredient.ServingSizeVolume.Unit;
 
-      numServingSizeCustom.Text = ingredient.ServingSizeCustom.Amount.N2();
+      mCustom.Value = ingredient.ServingSizeCustom.Amount;
       cboCustomUnits.EditValue = ingredient.ServingSizeCustom.Unit;
 
       ReadNutrition(ingredient.Nutrition);
@@ -109,39 +124,43 @@ namespace NutritionCalc
 
     public void ReadNutrition(NutritionInfo nutrition)
     {
-      numCalories.Text = nutrition.Calories.N2();
-      numFat.Text = nutrition.Fat.N2();
-      numSodium.Text = nutrition.Sodium.N2();
-      numCarbs.Text = nutrition.Carbs.N2();
-      numFiber.Text = nutrition.Fiber.N2();
-      numSugar.Text = nutrition.Sugar.N2();
-      numAdditionalSugar.Text = nutrition.AdditionalSugar.N2();
-      numProtein.Text = nutrition.Protein.N2();
+      mViewModel.Value = nutrition;
     }
 
     public void WriteTo(BaseIngredient ingredient)
     {
       if (cboWeightUnits.EditValue is WeightUnit weight)
       {
-        ingredient.ServingSizeWeight = new ServingSize<WeightUnit> { Amount = numServingSizeWeight.Value(), Unit = weight };
+        ingredient.ServingSizeWeight = new ServingSize<WeightUnit> { Amount = mWeight.Value, Unit = weight };
       }
 
       if (cboVolumeUnits.EditValue is VolumeUnit volume)
       {
-        ingredient.ServingSizeVolume = new ServingSize<VolumeUnit> { Amount = numServingSizeVolume.Value(), Unit = volume };
+        ingredient.ServingSizeVolume = new ServingSize<VolumeUnit> { Amount = mVolume.Value, Unit = volume };
       }
 
       if (cboCustomUnits.EditValue is CustomUnit custom)
       {
-        ingredient.ServingSizeCustom = new ServingSize<CustomUnit> { Amount = numServingSizeCustom.Value(), Unit = custom };
+        ingredient.ServingSizeCustom = new ServingSize<CustomUnit> { Amount = mCustom.Value, Unit = custom };
       }
 
       ingredient.Nutrition = Nutrition;
     }
 
-    private void num_TextChanged(object sender, EventArgs e)
+    public string GetErrorText()
     {
-      CalculateKetoCarbs();
+      if (dxErrorProvider1.HasErrors)
+      {
+        return Resources.PleaseFixNutritionErrorText;
+      }
+      else if (mWeight.Value <= 0 && mVolume.Value <= 0 && mCustom.Value <= 0)
+      {
+        return "There needs to be at least 1 non-zero serving size";
+      }
+      else
+      {
+        return string.Empty;
+      }
     }
   }
 }

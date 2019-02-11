@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       DevExpress.XtraLayout.ColumnDefinition columnDefinition1 = new DevExpress.XtraLayout.ColumnDefinition();
       DevExpress.XtraLayout.ColumnDefinition columnDefinition2 = new DevExpress.XtraLayout.ColumnDefinition();
       DevExpress.XtraLayout.RowDefinition rowDefinition1 = new DevExpress.XtraLayout.RowDefinition();
@@ -75,6 +76,7 @@
       this.lcSugar = new DevExpress.XtraLayout.LayoutControlItem();
       this.lcAdditionalSugar = new DevExpress.XtraLayout.LayoutControlItem();
       this.lcProtein = new DevExpress.XtraLayout.LayoutControlItem();
+      this.dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.cboCustomUnits.Properties)).BeginInit();
@@ -108,6 +110,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.lcSugar)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.lcAdditionalSugar)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.lcProtein)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dxErrorProvider1)).BeginInit();
       this.SuspendLayout();
       // 
       // layoutControl1
@@ -255,7 +258,6 @@
       this.numCarbs.Size = new System.Drawing.Size(168, 20);
       this.numCarbs.StyleController = this.layoutControl1;
       this.numCarbs.TabIndex = 13;
-      this.numCarbs.TextChanged += new System.EventHandler(this.num_TextChanged);
       // 
       // numFiber
       // 
@@ -274,7 +276,6 @@
       this.numFiber.Size = new System.Drawing.Size(168, 20);
       this.numFiber.StyleController = this.layoutControl1;
       this.numFiber.TabIndex = 16;
-      this.numFiber.TextChanged += new System.EventHandler(this.num_TextChanged);
       // 
       // numSugar
       // 
@@ -311,7 +312,6 @@
       this.numAdditionalSugar.Size = new System.Drawing.Size(168, 20);
       this.numAdditionalSugar.StyleController = this.layoutControl1;
       this.numAdditionalSugar.TabIndex = 18;
-      this.numAdditionalSugar.TextChanged += new System.EventHandler(this.num_TextChanged);
       // 
       // numProtein
       // 
@@ -620,6 +620,10 @@
       this.lcProtein.Text = "Protein";
       this.lcProtein.TextSize = new System.Drawing.Size(103, 13);
       // 
+      // dxErrorProvider1
+      // 
+      this.dxErrorProvider1.ContainerControl = this;
+      // 
       // NutritionInfoEdit
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -660,6 +664,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.lcSugar)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.lcAdditionalSugar)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.lcProtein)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dxErrorProvider1)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -698,5 +703,6 @@
     private DevExpress.XtraEditors.TextEdit numServingSizeWeight;
     private DevExpress.XtraEditors.TextEdit numServingSizeVolume;
     private DevExpress.XtraEditors.TextEdit numServingSizeCustom;
+    private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
   }
 }

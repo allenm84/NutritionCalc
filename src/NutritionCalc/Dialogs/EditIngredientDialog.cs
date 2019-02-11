@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.Data;
+using NutritionCalc.Properties;
 
 namespace NutritionCalc
 {
@@ -77,6 +78,16 @@ namespace NutritionCalc
       {
         InternalCustomDialogResult = CustomDialogResult.Delete;
         Close();
+      }
+    }
+
+    private void btnOK_Click(object sender, EventArgs e)
+    {
+      var errorText = nutritionInfoEdit.GetErrorText();
+      if (!string.IsNullOrWhiteSpace(errorText))
+      {
+        ShowError(errorText);
+        mCancelClose = true;
       }
     }
   }

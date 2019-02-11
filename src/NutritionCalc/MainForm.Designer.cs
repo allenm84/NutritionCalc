@@ -39,6 +39,7 @@
       this.bar1 = new DevExpress.XtraBars.Bar();
       this.tbbSave = new DevExpress.XtraBars.BarButtonItem();
       this.skinBarSubItem1 = new DevExpress.XtraBars.SkinBarSubItem();
+      this.tbbCalculator = new DevExpress.XtraBars.BarButtonItem();
       this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
       this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
       this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -55,15 +56,15 @@
       this.grpIngredients = new NutritionCalc.GroupedItemView();
       this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
+      this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
+      this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
       this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
-      this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
       this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -80,15 +81,15 @@
       ((System.ComponentModel.ISupportInitialize)(this.gridViewBaseRecipes)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
@@ -171,8 +172,9 @@
       this.barManager1.Form = this;
       this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.tbbSave,
-            this.skinBarSubItem1});
-      this.barManager1.MaxItemId = 2;
+            this.skinBarSubItem1,
+            this.tbbCalculator});
+      this.barManager1.MaxItemId = 3;
       // 
       // bar1
       // 
@@ -182,7 +184,8 @@
       this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
       this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.tbbSave, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.skinBarSubItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.skinBarSubItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.tbbCalculator, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
       this.bar1.OptionsBar.AllowQuickCustomization = false;
       this.bar1.OptionsBar.DrawDragBorder = false;
       this.bar1.OptionsBar.UseWholeRow = true;
@@ -204,6 +207,14 @@
       this.skinBarSubItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("skinBarSubItem1.ImageOptions.Image")));
       this.skinBarSubItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("skinBarSubItem1.ImageOptions.LargeImage")));
       this.skinBarSubItem1.Name = "skinBarSubItem1";
+      // 
+      // tbbCalculator
+      // 
+      this.tbbCalculator.Caption = "Calculator";
+      this.tbbCalculator.Id = 2;
+      this.tbbCalculator.ImageOptions.Image = global::NutritionCalc.Properties.Resources.calculator;
+      this.tbbCalculator.Name = "tbbCalculator";
+      this.tbbCalculator.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.tbbCalculator_ItemClick);
       // 
       // barDockControlTop
       // 
@@ -367,6 +378,43 @@
             this.layoutControlGroup3,
             this.layoutControlGroup4});
       // 
+      // layoutControlGroup2
+      // 
+      this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem1,
+            this.layoutControlItem4,
+            this.emptySpaceItem1});
+      this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
+      this.layoutControlGroup2.Name = "layoutControlGroup2";
+      this.layoutControlGroup2.Size = new System.Drawing.Size(530, 345);
+      this.layoutControlGroup2.Text = "Ingredients";
+      // 
+      // layoutControlItem1
+      // 
+      this.layoutControlItem1.Control = this.grpIngredients;
+      this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
+      this.layoutControlItem1.Name = "layoutControlItem1";
+      this.layoutControlItem1.Size = new System.Drawing.Size(530, 319);
+      this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+      this.layoutControlItem1.TextVisible = false;
+      // 
+      // layoutControlItem4
+      // 
+      this.layoutControlItem4.Control = this.btnAddIngredient;
+      this.layoutControlItem4.Location = new System.Drawing.Point(0, 319);
+      this.layoutControlItem4.Name = "layoutControlItem4";
+      this.layoutControlItem4.Size = new System.Drawing.Size(85, 26);
+      this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
+      this.layoutControlItem4.TextVisible = false;
+      // 
+      // emptySpaceItem1
+      // 
+      this.emptySpaceItem1.AllowHotTrack = false;
+      this.emptySpaceItem1.Location = new System.Drawing.Point(85, 319);
+      this.emptySpaceItem1.Name = "emptySpaceItem1";
+      this.emptySpaceItem1.Size = new System.Drawing.Size(445, 26);
+      this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+      // 
       // layoutControlGroup3
       // 
       this.layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -413,43 +461,6 @@
       this.layoutControlItem2.Size = new System.Drawing.Size(530, 319);
       this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem2.TextVisible = false;
-      // 
-      // layoutControlGroup2
-      // 
-      this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem4,
-            this.emptySpaceItem1});
-      this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
-      this.layoutControlGroup2.Name = "layoutControlGroup2";
-      this.layoutControlGroup2.Size = new System.Drawing.Size(530, 345);
-      this.layoutControlGroup2.Text = "Ingredients";
-      // 
-      // layoutControlItem1
-      // 
-      this.layoutControlItem1.Control = this.grpIngredients;
-      this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-      this.layoutControlItem1.Name = "layoutControlItem1";
-      this.layoutControlItem1.Size = new System.Drawing.Size(530, 319);
-      this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-      this.layoutControlItem1.TextVisible = false;
-      // 
-      // layoutControlItem4
-      // 
-      this.layoutControlItem4.Control = this.btnAddIngredient;
-      this.layoutControlItem4.Location = new System.Drawing.Point(0, 319);
-      this.layoutControlItem4.Name = "layoutControlItem4";
-      this.layoutControlItem4.Size = new System.Drawing.Size(85, 26);
-      this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-      this.layoutControlItem4.TextVisible = false;
-      // 
-      // emptySpaceItem1
-      // 
-      this.emptySpaceItem1.AllowHotTrack = false;
-      this.emptySpaceItem1.Location = new System.Drawing.Point(85, 319);
-      this.emptySpaceItem1.Name = "emptySpaceItem1";
-      this.emptySpaceItem1.Size = new System.Drawing.Size(445, 26);
-      this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
       // 
       // layoutControlGroup4
       // 
@@ -522,15 +533,15 @@
       ((System.ComponentModel.ISupportInitialize)(this.gridViewBaseRecipes)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
@@ -582,6 +593,7 @@
     private DevExpress.XtraGrid.Views.Grid.GridView gridViewRecipes;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
     private DevExpress.XtraGrid.Columns.GridColumn colRecipeName;
+    private DevExpress.XtraBars.BarButtonItem tbbCalculator;
   }
 }
 

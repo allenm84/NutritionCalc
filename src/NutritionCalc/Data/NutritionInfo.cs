@@ -142,10 +142,17 @@ namespace NutritionCalc
       return value1;
     }
 
-    public static NutritionInfo operator /(NutritionInfo value1, decimal divider)
+    public static NutritionInfo operator /(NutritionInfo value, decimal divider)
     {
-      var factor = 1 / divider;
-      return value1 * factor;
+      value.Calories /= divider;
+      value.Fat /= divider;
+      value.Sodium /= divider;
+      value.Carbs /= divider;
+      value.Fiber /= divider;
+      value.Sugar /= divider;
+      value.AdditionalSugar /= divider;
+      value.Protein /= divider;
+      return value;
     }
   }
 }

@@ -28,21 +28,21 @@
     /// </summary>
     private void InitializeComponent()
     {
-      DevExpress.XtraLayout.ColumnDefinition columnDefinition4 = new DevExpress.XtraLayout.ColumnDefinition();
-      DevExpress.XtraLayout.ColumnDefinition columnDefinition5 = new DevExpress.XtraLayout.ColumnDefinition();
-      DevExpress.XtraLayout.ColumnDefinition columnDefinition6 = new DevExpress.XtraLayout.ColumnDefinition();
-      DevExpress.XtraLayout.RowDefinition rowDefinition4 = new DevExpress.XtraLayout.RowDefinition();
-      DevExpress.XtraLayout.RowDefinition rowDefinition5 = new DevExpress.XtraLayout.RowDefinition();
-      DevExpress.XtraLayout.RowDefinition rowDefinition6 = new DevExpress.XtraLayout.RowDefinition();
+      DevExpress.XtraLayout.ColumnDefinition columnDefinition1 = new DevExpress.XtraLayout.ColumnDefinition();
+      DevExpress.XtraLayout.ColumnDefinition columnDefinition2 = new DevExpress.XtraLayout.ColumnDefinition();
+      DevExpress.XtraLayout.ColumnDefinition columnDefinition3 = new DevExpress.XtraLayout.ColumnDefinition();
+      DevExpress.XtraLayout.RowDefinition rowDefinition1 = new DevExpress.XtraLayout.RowDefinition();
+      DevExpress.XtraLayout.RowDefinition rowDefinition2 = new DevExpress.XtraLayout.RowDefinition();
+      DevExpress.XtraLayout.RowDefinition rowDefinition3 = new DevExpress.XtraLayout.RowDefinition();
       this.lstItems = new DevExpress.XtraEditors.CheckedListBoxControl();
       this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+      this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
+      this.btnOK = new DevExpress.XtraEditors.SimpleButton();
+      this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
       this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
       this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.btnOK = new DevExpress.XtraEditors.SimpleButton();
       this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
       this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
       ((System.ComponentModel.ISupportInitialize)(this.lstItems)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -78,6 +78,37 @@
       this.layoutControl1.TabIndex = 1;
       this.layoutControl1.Text = "layoutControl1";
       // 
+      // btnCancel
+      // 
+      this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+      this.btnCancel.Location = new System.Drawing.Point(220, 255);
+      this.btnCancel.Name = "btnCancel";
+      this.btnCancel.Size = new System.Drawing.Size(76, 22);
+      this.btnCancel.StyleController = this.layoutControl1;
+      this.btnCancel.TabIndex = 6;
+      this.btnCancel.Text = "Cancel";
+      // 
+      // btnOK
+      // 
+      this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+      this.btnOK.Location = new System.Drawing.Point(140, 255);
+      this.btnOK.Name = "btnOK";
+      this.btnOK.Size = new System.Drawing.Size(76, 22);
+      this.btnOK.StyleController = this.layoutControl1;
+      this.btnOK.TabIndex = 5;
+      this.btnOK.Text = "OK";
+      // 
+      // labelControl1
+      // 
+      this.labelControl1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
+      this.labelControl1.Location = new System.Drawing.Point(12, 12);
+      this.labelControl1.Name = "labelControl1";
+      this.labelControl1.Size = new System.Drawing.Size(284, 39);
+      this.labelControl1.StyleController = this.layoutControl1;
+      this.labelControl1.TabIndex = 4;
+      this.labelControl1.Text = "Select which items to reset. \r\nResetting an item will remove the ingredient / bas" +
+    "e recipe that you found.";
+      // 
       // layoutControlGroup1
       // 
       this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -89,26 +120,26 @@
             this.layoutControlItem4});
       this.layoutControlGroup1.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
       this.layoutControlGroup1.Name = "Root";
-      columnDefinition4.SizeType = System.Windows.Forms.SizeType.Percent;
-      columnDefinition4.Width = 100D;
-      columnDefinition5.SizeType = System.Windows.Forms.SizeType.Absolute;
-      columnDefinition5.Width = 80D;
-      columnDefinition6.SizeType = System.Windows.Forms.SizeType.Absolute;
-      columnDefinition6.Width = 80D;
+      columnDefinition1.SizeType = System.Windows.Forms.SizeType.Percent;
+      columnDefinition1.Width = 100D;
+      columnDefinition2.SizeType = System.Windows.Forms.SizeType.Absolute;
+      columnDefinition2.Width = 80D;
+      columnDefinition3.SizeType = System.Windows.Forms.SizeType.Absolute;
+      columnDefinition3.Width = 80D;
       this.layoutControlGroup1.OptionsTableLayoutGroup.ColumnDefinitions.AddRange(new DevExpress.XtraLayout.ColumnDefinition[] {
-            columnDefinition4,
-            columnDefinition5,
-            columnDefinition6});
-      rowDefinition4.Height = 43D;
-      rowDefinition4.SizeType = System.Windows.Forms.SizeType.AutoSize;
-      rowDefinition5.Height = 100D;
-      rowDefinition5.SizeType = System.Windows.Forms.SizeType.Percent;
-      rowDefinition6.Height = 26D;
-      rowDefinition6.SizeType = System.Windows.Forms.SizeType.AutoSize;
+            columnDefinition1,
+            columnDefinition2,
+            columnDefinition3});
+      rowDefinition1.Height = 43D;
+      rowDefinition1.SizeType = System.Windows.Forms.SizeType.AutoSize;
+      rowDefinition2.Height = 100D;
+      rowDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
+      rowDefinition3.Height = 26D;
+      rowDefinition3.SizeType = System.Windows.Forms.SizeType.AutoSize;
       this.layoutControlGroup1.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
-            rowDefinition4,
-            rowDefinition5,
-            rowDefinition6});
+            rowDefinition1,
+            rowDefinition2,
+            rowDefinition3});
       this.layoutControlGroup1.Size = new System.Drawing.Size(308, 289);
       this.layoutControlGroup1.TextVisible = false;
       // 
@@ -123,17 +154,6 @@
       this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem1.TextVisible = false;
       // 
-      // labelControl1
-      // 
-      this.labelControl1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
-      this.labelControl1.Location = new System.Drawing.Point(12, 12);
-      this.labelControl1.Name = "labelControl1";
-      this.labelControl1.Size = new System.Drawing.Size(284, 39);
-      this.labelControl1.StyleController = this.layoutControl1;
-      this.labelControl1.TabIndex = 4;
-      this.labelControl1.Text = "Select which items to reset. \r\nResetting an item will remove the ingredient / bas" +
-    "e recipe that you selected";
-      // 
       // layoutControlItem2
       // 
       this.layoutControlItem2.Control = this.labelControl1;
@@ -143,16 +163,6 @@
       this.layoutControlItem2.Size = new System.Drawing.Size(288, 43);
       this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem2.TextVisible = false;
-      // 
-      // btnOK
-      // 
-      this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.btnOK.Location = new System.Drawing.Point(140, 255);
-      this.btnOK.Name = "btnOK";
-      this.btnOK.Size = new System.Drawing.Size(76, 22);
-      this.btnOK.StyleController = this.layoutControl1;
-      this.btnOK.TabIndex = 5;
-      this.btnOK.Text = "OK";
       // 
       // layoutControlItem3
       // 
@@ -164,16 +174,6 @@
       this.layoutControlItem3.Size = new System.Drawing.Size(80, 26);
       this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem3.TextVisible = false;
-      // 
-      // btnCancel
-      // 
-      this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(220, 255);
-      this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(76, 22);
-      this.btnCancel.StyleController = this.layoutControl1;
-      this.btnCancel.TabIndex = 6;
-      this.btnCancel.Text = "Cancel";
       // 
       // layoutControlItem4
       // 
@@ -195,7 +195,6 @@
       this.ClientSize = new System.Drawing.Size(308, 289);
       this.Controls.Add(this.layoutControl1);
       this.Name = "ResetRecipeItemsDialog";
-      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Reset Ingredients/Base Recipes";
       ((System.ComponentModel.ISupportInitialize)(this.lstItems)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();

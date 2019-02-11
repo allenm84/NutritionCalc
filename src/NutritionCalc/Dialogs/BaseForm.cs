@@ -22,6 +22,12 @@ namespace NutritionCalc
 
     protected virtual CustomDialogResult? InternalCustomDialogResult { get; set; } = null;
 
+    public void ShowCentered(IWin32Window owner = null)
+    {
+      Show(owner);
+      CenterToScreen();
+    }
+
     protected bool Confirm(string message, string caption = "Confirm")
     {
       var result = XtraMessageBox.Show(this, message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
